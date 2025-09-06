@@ -1,6 +1,9 @@
 
 body {
-    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    background-image: url('img/fondo.jpg'); 
+    background-size: cover;       
+    background-position: center; 
+    
     height: 100vh;
     display: flex;
     justify-content: center;
