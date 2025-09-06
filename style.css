@@ -1,24 +1,25 @@
 /* Fondo de la página */
 body {
-  background: linear-gradient(135deg, #6dd5ed, #2193b0);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Card del login */
 .login-card {
-  width: 350px;
-  padding: 2rem;
-  border-radius: 15px;
-  background-color: #ffffffcc; /* blanco semi-transparente */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  text-align: center;
+    width: 350px;
+    padding: 2rem;
+    border-radius: 15px;
+    background-color: #ffffffcc; /* blanco semi-transparente */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
 /* Títulos */
 .login-card h1 {
-  font-weight: bold;
-  margin-bottom: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem; 
+}
