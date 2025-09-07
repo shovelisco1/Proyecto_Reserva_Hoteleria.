@@ -26,3 +26,51 @@ body {
     font-weight: bold;
     margin-bottom: 1rem; 
 }
+
+.hotel-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    gap: 15px;
+}
+
+.hotel-img {
+    width: 180px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+
+
+.hoteles-wrapper {
+    max-height: 75vh; 
+    overflow-y: auto; 
+    border-radius: 12px;
+    background: #fff;
+}
+
+
+.hotel-card {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 12px;
+    gap: 15px;
+}
+
+
+.hotel-img {
+    width: 160px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
