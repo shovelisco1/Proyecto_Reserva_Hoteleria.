@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hotel-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .hotel-info {
+            padding-left: 20px;
+        }
+        .recomendados {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .recomendado-card {
+            min-width: 200px;
+            flex: 0 0 auto;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .recomendado-card img {
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .recomendado-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="inicio.html">StayChile</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="card p-4 shadow-lg">
+            <div class="row">
+                <!-- Imagen a la izquierda -->
+                <div class="col-md-6">
+                    <div id="carouselHotel" class="carousel slide mb-3" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselInner"></div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHotel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselHotel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Información a la derecha -->
+                <div class="col-md-6 hotel-info">
+                    <h2 id="hotelNombre"></h2>
+                    <p id="hotelDescripcion"></p>
+                    <p><strong>Precio por noche:</strong> <span id="hotelPrecio"></span></p>
+                    <button class="btn btn-success me-2">Reservar</button>
+                    <a href="exploracion.html" class="btn btn-secondary">Volver</a>
+
+                    <h5 class="mt-4">Hoteles Recomendados</h5>
+                    <div id="hotelesRecomendados" class="recomendados"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="detallesHoteles.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const idHotel = params.get('id');
+
+        const hotel = hoteles.find(h => h.id === idHotel);
+
+        if (hotel) {
+            document.getElementById('hotelNombre').textContent = hotel.nombre;
+            document.getElementById('hotelDescripcion').textContent = hotel.descripcion || "Descripción no disponible.";
+            document.getElementById('hotelPrecio').textContent = `$${hotel.precio.toLocaleString('es-CL')}`;
+
+            const carouselInner = document.getElementById('carouselInner');
+            hotel.imagen.forEach((img, index) => {
+                const div = document.createElement('div');
+                div.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+                div.innerHTML = `<img src="${img}" class="d-block w-100 hotel-img" alt="${hotel.nombre}">`;
+                carouselInner.appendChild(div);
+            });
+
+            // Hoteles recomendados
+            const contenedorRecomendados = document.getElementById('hotelesRecomendados');
+            const copia = hoteles.filter(h => h.id !== idHotel);
+            const seleccion = [];
+            for (let i = 0; i < 4; i++) {
+                if (copia.length === 0) break;
+                const indice = Math.floor(Math.random() * copia.length);
+                seleccion.push(copia.splice(indice, 1)[0]);
+            }
+
+            seleccion.forEach(h => {
+                const card = document.createElement('div');
+                card.className = 'recomendado-card';
+                card.innerHTML = `
+                    <img src="${h.imagen[0]}" alt="${h.nombre}">
+                    <h6 class="mt-1">${h.nombre}</h6>
+                `;
+                card.addEventListener('click', () => {
+                    window.location.href = `hotel.html?id=${h.id}`;
+                });
+                contenedorRecomendados.appendChild(card);
+            });
+
+        } else {
+            document.getElementById('hotelDetalles').innerHTML = `
+                <h3 class="text-danger">Hotel no encontrado</h3>
+                <p>ID recibido: ${idHotel}</p>
+                <p>IDs disponibles: ${hoteles.map(h => h.id).join(', ')}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

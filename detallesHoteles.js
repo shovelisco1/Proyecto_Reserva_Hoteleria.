@@ -1,20 +1,21 @@
 const hoteles = [
     {
+        id: "hotel1",
         nombre: "Hotel Bidasoa",
         region: "Metropolitana",
         calificacion: 5,
-        precio: 144.000,
+        precio: 144000,
         imagen: [
-            "img/biadosa1.jpg",
             "img/bidasoa2.jpg",
             "img/bidasoa3.jpg",
         ],
     },
     {
+        id: "hotel2",
         nombre: "Hillside Hotel",
         region: "Metropolitana",
         calificacion: 4,
-        precio: 110.000,
+        precio: 110000,
         imagen: [
             "img/hillside1.jpg",
             "img/hillside2.jpg",
@@ -22,10 +23,11 @@ const hoteles = [
         ],
     },  
     {
+        id: "hotel3",
         nombre: "Carmenere Hotel",
         region: "Metropolitana",
         calificacion: 5,
-        precio: 94.000,
+        precio: 94000,
         imagen: [
             "img/carmenere1.jpg",
             "img/carmenere2.jpg",
@@ -33,10 +35,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel4",
         nombre: "Hotel Foresta",
         region: "Metropolitana",
         calificacion: 3,
-        precio: 77.978,
+        precio: 77978,
         imagen: [
             "img/foresta1.jpg",
             "img/foresta2.jpg",
@@ -44,10 +47,11 @@ const hoteles = [
         ],
     }, 
     {
+        id: "hotel5",
         nombre: "Hotel Bonaparte Boutique",
         region: "Metropolitana",
         calificacion: 4,
-        precio: 94.613,
+        precio: 94613,
         imagen: [
             "img/bonaparte1.jpg",
             "img/bonaparte2.jpg",
@@ -55,10 +59,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel6",
         nombre: "Hotel ibis Santiago Providencia",
         region: "Metropolitana",
         calificacion: 3,
-        precio: 71.222,
+        precio: 71222,
         imagen: [
             "img/ibis1.jpg",
             "img/ibis2.jpg",
@@ -66,10 +71,11 @@ const hoteles = [
         ],
     }, 
     {
+        id: "hotel7",
         nombre: "Hotel Luciano K",
         region: "Metropolitana",
         calificacion: 4,
-        precio: 149.255,
+        precio: 149255,
         imagen: [
             "img/luciano1.jpg",
             "img/luciano2.jpg",
@@ -77,10 +83,11 @@ const hoteles = [
         ],
     }, 
     {
+        id: "hotel8",
         nombre: "Hotel Noi Vitacura",
         region: "Metropolitana",
         calificacion: 5,
-        precio: 265.124,
+        precio: 265124,
         imagen: [
             "img/noi1.jpg",
             "img/noi2.jpg",
@@ -88,10 +95,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel9",
         nombre: "Hotel Pullman Santiago Vitacura",
         region: "Metropolitana",
         calificacion: 5,
-        precio: 104.037,
+        precio: 104037,
         imagen: [
             "img/pullman1.jpg",
             "img/pullman2.jpg",
@@ -99,10 +107,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel10",
         nombre: "Hotel Plaza San Francisco",
         region: "Metropolitana",
         calificacion: 5,
-        precio: 124.757,
+        precio: 124757,
         imagen: [
             "img/francisco1.jpg",
             "img/francisco2.jpg",
@@ -112,10 +121,11 @@ const hoteles = [
 
 
     {
+        id: "hotel11",
         nombre: "Hotel Sheraton Miramar",
         region: "Valparaíso",
         calificacion: 5,
-        precio: 322.010,
+        precio: 322010,
         imagen: [
             "img/sheraton1.jpg",
             "img/sheraton2.jpg",
@@ -123,10 +133,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel12",
         nombre: "Hotel Casamata Poshtel",
         region: "Valparaíso",
         calificacion: 5,
-        precio: 87.878,
+        precio: 87878,
         imagen: [
             "img/casamata1.jpg",
             "img/casamata2.jpg",
@@ -134,10 +145,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel13",
         nombre: "Hotel Pullman Viña del Mar",
         region: "Valparaíso",
         calificacion: 4,
-        precio: 114.000,
+        precio: 114000,
         imagen: [
             "img/pullmanvina1.jpg",
             "img/pullmanvina2.jpg",
@@ -145,10 +157,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel14",
         nombre: "Hotel La Blanca",
         region: "Valparaíso",
         calificacion: 4,
-        precio: 85.000,
+        precio: 85000,
         imagen: [
             "img/blanca1.jpg",
             "img/blanca2.jpg",
@@ -156,10 +169,11 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel15",
         nombre: "Columba Hotel",
         region: "Valparaíso",
         calificacion: 3,
-        precio: 31.000,
+        precio: 31000,
         imagen: [
             "img/columba1.jpg",
             "img/columba2.jpg",
@@ -167,30 +181,33 @@ const hoteles = [
         ],
     },
     {
+        id: "hotel16",
         nombre: "Hotel Vista Hermosa",
         region: "Valparaíso",
         calificacion: 3,
-        precio: 44.000,
+        precio: 44000,
         imagen: [
             "img/hermosa1.jpg",
             "img/hermosa2.jpg",
         ],
     },
     {
+        id: "hotel17",
         nombre: "Hotel Valle Hermoso",
         region: "Valparaíso",
         calificacion: 4,
-        precio: 21.000,
+        precio: 21000,
         imagen: [
             "img/hermoso1.jpg",
             "img/hermoso2.jpg",
         ],
     },
     {
+        id: "hotel18",
         nombre: "Hotel CasaMoro",
         region: "Valparaíso",
         calificacion: 5,
-        precio: 65.000,
+        precio: 65000,
         imagen: [
             "img/casamoro1.jpg",
             "img/casamoro2.jpg",
@@ -198,13 +215,14 @@ const hoteles = [
         ],
     },  
     {
+        id: "hotel19",
         nombre: "Hotel Valle Hermoso",
         region: "Valparaíso",
         calificacion: 4,
-        precio: 21.000,
+        precio: 21000,
         imagen: [
             "img/hermoso1.jpg",
             "img/hermoso2.jpg",
         ],
-    },              
+    }              
 ];

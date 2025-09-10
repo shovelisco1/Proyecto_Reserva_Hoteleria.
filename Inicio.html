@@ -36,7 +36,81 @@
             <a href="#" id= "explorandoHoteles"class="btn btn-primary btn-lg mt-3">Explorar Hoteles</a>
             <a href="#" class="btn btn-outline-primary btn-lg mt-3">Mis Reservas</a>
         </div>
+        
 
+
+
+
+
+
+        <div class="container my-5">
+            <h2 class="mb-4 text-center">Hoteles Recomendados</h2>
+            <div id="hotelesRecomendados" class="row g-3 justify-content-center"></div>
+        </div>
+
+        <script src="detallesHoteles.js"></script>
+        <script>
+            const contenedorRecomendados = document.getElementById('hotelesRecomendados');
+
+            // Elegir 3 hoteles aleatorios
+            function getHotelesAleatorios(num) {
+                const copia = [...hoteles]; // hacemos copia para no modificar original
+                const seleccion = [];
+                for (let i = 0; i < num; i++) {
+                    if (copia.length === 0) break;
+                    const indice = Math.floor(Math.random() * copia.length);
+                    seleccion.push(copia.splice(indice, 1)[0]);
+                }
+                return seleccion;
+            }
+
+            const hotelesAleatorios = getHotelesAleatorios(3);
+
+            hotelesAleatorios.forEach(hotel => {
+                const card = document.createElement('div');
+                card.className = 'col-md-4';
+
+                card.innerHTML = `
+                    <div class="card h-100 shadow-sm">
+                        <img src="${hotel.imagen[0]}" class="card-img-top" alt="${hotel.nombre}" style="height:200px; object-fit:cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">${hotel.nombre}</h5>
+                            <p class="card-text"><strong>Región:</strong> ${hotel.region}</p>
+                            <p class="card-text">
+                                <strong>Calificación:</strong> ${'⭐'.repeat(hotel.calificacion)}
+                            </p>
+                            <p class="card-text"><strong>Precio:</strong> $${hotel.precio.toLocaleString('es-CL')}</p>
+                            <button class="btn btn-primary w-100" onclick="verHotel('${hotel.id}')">Ver más</button>
+                        </div>
+                    </div>
+                `;
+                contenedorRecomendados.appendChild(card);
+            });
+
+            function verHotel(id) {
+                window.location.href = `hotel.html?id=${id}`;
+            }
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         <script>
         function cerrarSesion() {
             window.location.replace("index.html"); 
