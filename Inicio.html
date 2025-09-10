@@ -21,7 +21,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Reservas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Hoteles</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="exploracion.html">Hoteles</a></li>
                         <li class="nav-item"><a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
                     </ul>
                 </div>
@@ -36,13 +36,7 @@
             <a href="#" id= "explorandoHoteles"class="btn btn-primary btn-lg mt-3">Explorar Hoteles</a>
             <a href="#" class="btn btn-outline-primary btn-lg mt-3">Mis Reservas</a>
         </div>
-        
-
-
-
-
-
-
+    
         <div class="container my-5">
             <h2 class="mb-4 text-center">Hoteles Recomendados</h2>
             <div id="hotelesRecomendados" class="row g-3 justify-content-center"></div>
@@ -52,9 +46,8 @@
         <script>
             const contenedorRecomendados = document.getElementById('hotelesRecomendados');
 
-            // Elegir 3 hoteles aleatorios
             function getHotelesAleatorios(num) {
-                const copia = [...hoteles]; // hacemos copia para no modificar original
+                const copia = [...hoteles]; 
                 const seleccion = [];
                 for (let i = 0; i < num; i++) {
                     if (copia.length === 0) break;
@@ -90,27 +83,7 @@
             function verHotel(id) {
                 window.location.href = `hotel.html?id=${id}`;
             }
-        </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        </script>        
         <script>
         function cerrarSesion() {
             window.location.replace("index.html"); 

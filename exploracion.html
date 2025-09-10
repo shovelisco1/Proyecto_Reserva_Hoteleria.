@@ -8,7 +8,7 @@
 </head>
 <body class="bg-light">
 
-    <!-- Navbar -->
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="inicio.html">StayChile</a>
@@ -19,41 +19,117 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="inicio.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Reservas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Hoteles</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="exploracion.html">Hoteles</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Contenido principal -->
-    <div class="container my-5">
+    
+    <div class="container my-4">
         <h2 class="text-center mb-4">Explora Hoteles</h2>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <label class="form-label">Región</label>
+                <select id="filtroRegion" class="form-select">
+                    <option value="">Todas</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Calificación</label>
+                <select id="filtroCalificacion" class="form-select">
+                    <option value="">Todas</option>
+                    <option value="5">5 estrellas</option>
+                    <option value="4">4 estrellas o más</option>
+                    <option value="3">3 estrellas o más</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Precio</label>
+                <select id="filtroPrecio" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="0-25000">$0 - $25.000</option>
+                    <option value="25000-50000">$25.000 - $50.000</option>
+                    <option value="50000-100000">$50.000 - $100.000</option>
+                    <option value="100000-9999999">Más de $100.000</option>
+                </select>
+            </div>
+        </div>
         <div id="hotelesContainer" class="row g-4"></div>
     </div>
 
     <script src="detallesHoteles.js"></script>
     <script>
         const contenedor = document.getElementById('hotelesContainer');
+        const filtroRegion = document.getElementById('filtroRegion');
+        const filtroCalificacion = document.getElementById('filtroCalificacion');
+        const filtroPrecio = document.getElementById('filtroPrecio');
 
-        hoteles.forEach((hotel) => {
-            const col = document.createElement('div');
-            col.className = 'col-md-4';
-
-            col.innerHTML = `
-                <div class="card h-100 shadow-sm">
-                    <img src="${hotel.imagen[0]}" class="card-img-top" alt="${hotel.nombre}" style="height:200px; object-fit:cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">${hotel.nombre}</h5>
-                        <p class="card-text"><strong>Región:</strong> ${hotel.region}</p>
-                        <p class="card-text"><strong>Calificación:</strong> ${'⭐'.repeat(hotel.calificacion)}</p>
-                        <p class="card-text"><strong>Precio:</strong> $${hotel.precio.toLocaleString('es-CL')}</p>
-                        <button class="btn btn-primary w-100" onclick="verHotel('${hotel.id}')">Ver más</button>
-                    </div>
-                </div>
-            `;
-            contenedor.appendChild(col);
+        
+        const regionesUnicas = [...new Set(hoteles.map(h => h.region))];
+        regionesUnicas.forEach(region => {
+            const option = document.createElement('option');
+            option.value = region;
+            option.textContent = region;
+            filtroRegion.appendChild(option);
         });
+
+        function mostrarHoteles(lista) {
+            contenedor.innerHTML = '';
+            if (lista.length === 0) {
+                contenedor.innerHTML = `<p class="text-center text-muted">No se encontraron hoteles con esos filtros.</p>`;
+                return;
+            }
+
+            lista.forEach((hotel) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4';
+
+                col.innerHTML = `
+                    <div class="card h-100 shadow-sm">
+                        <img src="${hotel.imagen[0]}" class="card-img-top" alt="${hotel.nombre}" style="height:200px; object-fit:cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">${hotel.nombre}</h5>
+                            <p class="card-text"><strong>Región:</strong> ${hotel.region}</p>
+                            <p class="card-text"><strong>Calificación:</strong> ${'⭐'.repeat(hotel.calificacion)}</p>
+                            <p class="card-text"><strong>Precio:</strong> $${hotel.precio.toLocaleString('es-CL')}</p>
+                            <button class="btn btn-primary w-100" onclick="verHotel('${hotel.id}')">Ver más</button>
+                        </div>
+                    </div>
+                `;
+                contenedor.appendChild(col);
+            });
+        }
+
+        function aplicarFiltros() {
+            let lista = [...hoteles];
+
+    
+            if (filtroRegion.value) {
+                lista = lista.filter(h => h.region === filtroRegion.value);
+            }
+
+            
+            if (filtroCalificacion.value) {
+                const minCalificacion = parseInt(filtroCalificacion.value);
+                lista = lista.filter(h => h.calificacion >= minCalificacion);
+            }
+
+            
+            if (filtroPrecio.value) {
+                const [min, max] = filtroPrecio.value.split('-').map(Number);
+                lista = lista.filter(h => h.precio >= min && h.precio <= max);
+            }
+
+            mostrarHoteles(lista);
+        }
+
+        [filtroRegion, filtroCalificacion, filtroPrecio].forEach(filtro => {
+            filtro.addEventListener('change', aplicarFiltros);
+        });
+
+        mostrarHoteles(hoteles);
 
         function verHotel(id) {
             window.location.href = `hotel.html?id=${id}`;

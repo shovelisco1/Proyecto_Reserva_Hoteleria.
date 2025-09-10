@@ -213,16 +213,5 @@ const hoteles = [
             "img/casamoro2.jpg",
             "img/casamoro3.jpg",
         ],
-    },  
-    {
-        id: "hotel19",
-        nombre: "Hotel Valle Hermoso",
-        region: "Valparaíso",
-        calificacion: 4,
-        precio: 21000,
-        imagen: [
-            "img/hermoso1.jpg",
-            "img/hermoso2.jpg",
-        ],
-    }              
+    },              
 ];
