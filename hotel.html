@@ -6,50 +6,93 @@
     <title>Detalles del Hotel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-image: url("img/fondo.jpg");
+            min-height: 100vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
         .hotel-img {
             width: 100%;
             max-height: 400px;
             object-fit: cover;
             border-radius: 8px;
         }
+
         .hotel-info {
             padding-left: 20px;
         }
+
+        .card-principal, .card-recomendados {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .card-recomendados {
+            margin-top: 30px;
+        }
+
         .recomendados {
             display: flex;
             gap: 15px;
             overflow-x: auto;
             padding: 10px 0;
+            scroll-behavior: smooth; 
         }
+
         .recomendado-card {
             min-width: 200px;
             flex: 0 0 auto;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .recomendado-card img {
             height: 120px;
             object-fit: cover;
             border-radius: 5px;
             width: 100%;
         }
+
         .recomendado-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        }
+
+        .recomendados::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .recomendados::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="inicio.html">StayChile</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="inicio.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="reservas.html">Reservas</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="exploracion.html">Hoteles</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Cerrar Sesión</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container my-5">
-        <div class="card p-4 shadow-lg">
-            <div class="row">
-                <!-- Imagen a la izquierda -->
+    <div class="container my-5 d-flex justify-content-center">
+        <div class="card p-4 shadow-lg card-principal">
+            <div class="row">       
                 <div class="col-md-6">
                     <div id="carouselHotel" class="carousel slide mb-3" data-bs-ride="carousel">
                         <div class="carousel-inner" id="carouselInner"></div>
@@ -63,22 +106,33 @@
                         </button>
                     </div>
                 </div>
+                <div class="col-md-6 hotel-info d-flex flex-column justify-content-between" style="height: 100%;">
+                    <div>
+                        <h2 id="hotelNombre"></h2>
+                        <p id="hotelDescripcion"></p>
+                        <p><strong>Dirección:</strong> <span id="hotelDireccion"></span></p>
+                        <p><strong>Precio por noche:</strong> <span id="hotelPrecio"></span></p>
+                        <p><strong>Region</strong> <span id ="hotelRegion"></span></p>
+                    </div>
 
-                <!-- Información a la derecha -->
-                <div class="col-md-6 hotel-info">
-                    <h2 id="hotelNombre"></h2>
-                    <p id="hotelDescripcion"></p>
-                    <p><strong>Precio por noche:</strong> <span id="hotelPrecio"></span></p>
-                    <button class="btn btn-success me-2">Reservar</button>
-                    <a href="exploracion.html" class="btn btn-secondary">Volver</a>
-
-                    <h5 class="mt-4">Hoteles Recomendados</h5>
-                    <div id="hotelesRecomendados" class="recomendados"></div>
-                </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-success flex-fill" onclick="window.location.href=`pago.html?nombre=${encodeURIComponent(hotel.nombre)}&precio=${hotel.precio}`">
+                            Reservar
+                        </button>
+                        <a href="exploracion.html" class="btn btn-secondary flex-fill">Volver</a>
+                    </div>
+                </div>                    
             </div>
         </div>
     </div>
+    <div class="container my-5 d-flex justify-content-center">
+        <div class="card p-4 shadow-lg card-recomendados">
+            <h5 class="mb-3 text-center">Hoteles Recomendados</h5>
+            <div id="hotelesRecomendados" class="recomendados"></div>
+        </div>
+    </div>
 
+    
     <script src="detallesHoteles.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -89,8 +143,10 @@
 
         if (hotel) {
             document.getElementById('hotelNombre').textContent = hotel.nombre;
+            document.getElementById('hotelRegion').textContent = hotel.region || "";
             document.getElementById('hotelDescripcion').textContent = hotel.descripcion || "Descripción no disponible.";
             document.getElementById('hotelPrecio').textContent = `$${hotel.precio.toLocaleString('es-CL')}`;
+            document.getElementById('hotelDireccion').textContent = hotel.direccion || "Dirección no disponible.";
 
             const carouselInner = document.getElementById('carouselInner');
             hotel.imagen.forEach((img, index) => {
@@ -99,18 +155,10 @@
                 div.innerHTML = `<img src="${img}" class="d-block w-100 hotel-img" alt="${hotel.nombre}">`;
                 carouselInner.appendChild(div);
             });
-
-            // Hoteles recomendados
             const contenedorRecomendados = document.getElementById('hotelesRecomendados');
-            const copia = hoteles.filter(h => h.id !== idHotel);
-            const seleccion = [];
-            for (let i = 0; i < 4; i++) {
-                if (copia.length === 0) break;
-                const indice = Math.floor(Math.random() * copia.length);
-                seleccion.push(copia.splice(indice, 1)[0]);
-            }
+            const hotelesRecomendados = hoteles.filter(h => h.id !== idHotel);
 
-            seleccion.forEach(h => {
+            hotelesRecomendados.forEach(h => {
                 const card = document.createElement('div');
                 card.className = 'recomendado-card';
                 card.innerHTML = `
@@ -124,11 +172,7 @@
             });
 
         } else {
-            document.getElementById('hotelDetalles').innerHTML = `
-                <h3 class="text-danger">Hotel no encontrado</h3>
-                <p>ID recibido: ${idHotel}</p>
-                <p>IDs disponibles: ${hoteles.map(h => h.id).join(', ')}</p>
-            `;
+            alert("Hotel no encontrado");
         }
     </script>
 </body>

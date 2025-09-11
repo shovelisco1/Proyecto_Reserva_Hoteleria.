@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago - StayChile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <style>
+        body {
+            background-image: url("img/fondo.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+    </style>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="inicio.html">StayChile</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+
+            <!-- Formulario de pago -->
+            <div class="col-md-6">
+                <div class="card shadow p-4 mb-4 mb-md-0">
+                    <h3 class="mb-3">Finalizar Reserva</h3>
+
+                    <form id="formPago">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" id="nombre" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="apellido" class="form-label">Apellido</label>
+                                <input type="text" id="apellido" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo electrónico</label>
+                            <input type="email" id="correo" class="form-control" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fechaLlegada" class="form-label">Fecha de llegada</label>
+                                <input type="date" id="fechaLlegada" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fechaSalida" class="form-label">Fecha de salida</label>
+                                <input type="date" id="fechaSalida" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="personas" class="form-label">Cantidad de personas</label>
+                            <input type="number" id="personas" class="form-control" min="1" max="8" value="1" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Reserva para:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reservaPara" id="paraMi" value="mi" checked>
+                                <label class="form-check-label" for="paraMi">
+                                    Para mí
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reservaPara" id="paraOtra" value="otra">
+                                <label class="form-check-label" for="paraOtra">
+                                    Para otra persona
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tarjeta" class="form-label">Número de tarjeta</label>
+                            <input type="text" id="tarjeta" class="form-control" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="exp" class="form-label">Fecha de caducidad (MM/AA)</label>
+                                <input type="text" id="exp" class="form-control" maxlength="5" placeholder="MM/AA" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" id="cvv" class="form-control" maxlength="4" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Pagar ahora</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Card del hotel -->
+            <div class="col-md-4">
+                <div class="card shadow p-3">
+                    <img id="hotelImagen" src="" alt="Hotel" class="card-img-top mb-3" style="height:200px; object-fit:cover;">
+                    <div class="card-body">
+                        <h5 id="hotelNombreCard" class="card-title"></h5>
+                        <p id="hotelDescripcionCard" class="card-text"></p>
+                        <p><strong>Dirección:</strong> <span id="hotelDireccionCard"></span></p>
+                        <p><strong>Precio:</strong> <span id="hotelPrecioCard"></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="detallesHoteles.js"></script>
+    <script>
+        // Obtener datos del hotel desde la URL
+        const params = new URLSearchParams(window.location.search);
+        const nombre = params.get("nombre");
+        const precio = params.get("precio");
+
+        document.getElementById("hotelNombreCard").textContent = nombre || "Hotel no especificado";
+        document.getElementById("hotelPrecioCard").textContent = precio ? `$${parseInt(precio).toLocaleString("es-CL")}` : "-";
+
+        const hotel = hoteles.find(h => h.nombre === nombre);
+        if (hotel) {
+            document.getElementById("hotelImagen").src = hotel.imagen[0];
+            document.getElementById("hotelDescripcionCard").textContent = hotel.descripcion || "";
+            document.getElementById("hotelDireccionCard").textContent = hotel.direccion || "";
+        }
+
+        // Formateo del número de tarjeta
+        const inputTarjeta = document.getElementById("tarjeta");
+        inputTarjeta.addEventListener("input", () => {
+            let valor = inputTarjeta.value.replace(/\D/g, "");
+            valor = valor.replace(/(.{4})/g, "$1 ").trim();
+            inputTarjeta.value = valor;
+        });
+
+        // Formateo de la fecha
+        const inputExp = document.getElementById("exp");
+        inputExp.addEventListener("input", () => {
+            let valor = inputExp.value.replace(/\D/g, "");
+            if (valor.length > 2) {
+                valor = valor.substring(0, 2) + "/" + valor.substring(2, 4);
+            }
+            inputExp.value = valor;
+        });
+
+        // Envío del formulario
+        document.getElementById("formPago").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const reserva = {
+                nombreHotel: document.getElementById("hotelNombreCard").textContent,
+                direccion: document.getElementById("hotelDireccionCard").textContent,
+                precio: document.getElementById("hotelPrecioCard").textContent,
+                fechaLlegada: document.getElementById("fechaLlegada").value,
+                fechaSalida: document.getElementById("fechaSalida").value,
+                personas: document.getElementById("personas").value,
+                reservaPara: document.querySelector('input[name="reservaPara"]:checked').value,
+                nombre: document.getElementById("nombre").value,
+                apellido: document.getElementById("apellido").value
+            };
+
+            // Guardar en localStorage
+            let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+            reservas.push(reserva);
+            localStorage.setItem("reservas", JSON.stringify(reservas));
+
+            alert("✅ Pago realizado con éxito. ¡Gracias por tu reserva!");
+            window.location.href = "reservas.html"; // Redirige a reservas
+        });
+    </script>
+</body>
+</html> 
